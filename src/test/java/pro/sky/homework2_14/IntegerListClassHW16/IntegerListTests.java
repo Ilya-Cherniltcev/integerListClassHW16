@@ -2,6 +2,7 @@ package pro.sky.homework2_14.IntegerListClassHW16;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import pro.sky.homework2_14.IntegerListClassHW16.exceptions.AbsentElementException;
@@ -105,16 +106,48 @@ class IntegerListTests {
         Assertions.assertFalse(actual);
     }
 
-// =====================   определяем скорость сортировки элементов ==============
+    // =====================   определяем скорость сортировки элементов ==============
+// =====================          разными видами сортировки         ==============
     @Test
-    void testSpeedOfSortTheFirst() {
+    @Disabled
+    void testSpeedOfSorting() {
         // ---- передаем в конструктор число элементов для генерации массива случайных числе
         integerList = new IntegerListImpl(100_000);
-        Integer[] sortedArray = integerList.sortArrayTheFirst();
-//        boolean actual = integerList.contains(1);
-//        Assertions.assertTrue(actual);
-    }
+//        Integer[] actual = integerList.getAll();
+//        System.out.println("Неотсортированный массив: " + integerList.toString(actual));
+        // ********** (1) применяем метод сортировки вставкой ******************
+        // *********  (квадратичная сложность)  **********
+        // ##############  !!!  самая быстрая сортировка  !!!  ###############
+        // -------------- измеряем время ---------------
+        long start = System.currentTimeMillis();
+        Integer[] sortedArray = integerList.sortArrayByInserting();
+        System.out.print("Время 1-й сортировки (вставкой) составило: ");
+        System.out.println(System.currentTimeMillis() - start);
 
+//        System.out.println(integerList.toString(sortedArray));
+        System.out.println("******************************");
+//        System.out.println("Неотсортированный массив: " + integerList.toString(actual));
+        // ********** (2) применяем метод пузырьковой сортировки ******************
+        // *********  (квадратичная сложность)  **********
+        // -------------- измеряем время ---------------
+        start = System.currentTimeMillis();
+        sortedArray = integerList.bubbleSortingOfArray();
+        System.out.print("Время 2-й сортировки (пузырьковой) составило: ");
+        System.out.println(System.currentTimeMillis() - start);
+
+//        System.out.println(integerList.toString(sortedArray));
+        System.out.println("******************************");
+//        System.out.println("Неотсортированный массив: " + integerList.toString(actual));
+        // ********** (3) применяем метод сортировки выбором ******************
+        // *********  (квадратичная сложность)  **********
+        // -------------- измеряем время ---------------
+        start = System.currentTimeMillis();
+        sortedArray = integerList.sortArrayByChoicing();
+        System.out.print("Время 3-й сортировки (выбором) составило: ");
+        System.out.println(System.currentTimeMillis() - start);
+
+//        System.out.println(integerList.toString(sortedArray));
+    }
 
 
     @Test

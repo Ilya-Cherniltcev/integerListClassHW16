@@ -13,16 +13,20 @@ import java.util.Arrays;
 public class IntegerListImpl implements IntegerList {
     private GenerateArray generateArray;
     private Integer[] strList;
+    //    private Integer[] sortedArray;
     private int length = 0;
 
     public IntegerListImpl(int len) {
-        assert false;
+        //assert false;
+        generateArray = new GenerateArray();
         this.strList = generateArray.getRandomArray(len); //new Integer[length];
         this.length = len;
+//        sortedArray = new Integer[len];
     }
 
     public IntegerListImpl() {
         this.strList = new Integer[]{};
+//        sortedArray = new Integer[]{};
     }
 
     @Override
@@ -134,21 +138,31 @@ public class IntegerListImpl implements IntegerList {
     @Override
     public boolean contains(Integer item) {
         validateEmptyArray();
-        boolean isExist = false;
-        for (Integer existStr : strList) {
-            if (existStr.equals(item)) {
-                isExist = true;
-                break;
-            }
-        }
-//        boolean isExist;
-//        isExist = Arrays.stream(strList)
-//                .findFirst()
-//                .toString()
-//                .equals(item);
+        int element = item.intValue();
+        //  ---- возвращаем отсортированный методом вставки массив  -----
+        Integer[] sortArr = sortArrayByInserting();
+        boolean isExist = binarySearch(sortArr, element);
         return isExist;
     }
 
+    private boolean binarySearch(Integer[] sortArr, int element) {
+        // ++++++++++   метод бинарного поиска +++++++
+        int min = 0;
+        int max = sortArr.length - 1;
+        while (min <= max) {
+            int middle = (min + max) / 2;
+            int sortArrMid = sortArr[middle].intValue();
+            if (element == sortArrMid) {
+                return true;
+            }
+            if (element < sortArrMid) {
+                max = middle - 1;
+            } else {
+                min = middle + 1;
+            }
+        }
+        return false;
+    }
 
     // Поиск элемента.  Вернуть индекс элемента
     // или -1 в случае отсутствия.
@@ -257,17 +271,64 @@ public class IntegerListImpl implements IntegerList {
         }
     }
 
-    public String toString(String[] tempList) {
+    public String toString(Integer[] tempList) {
         return Arrays.toString(tempList);
     }
 
 
     // ***** метод сортировки 1-й ******************* (в сгенерировнном массиве) ****
-    // ******   СОРТИРОВКА ВСТАВКОЙ ************************************************
-    public Integer[] sortArrayTheFirst () {
+    // ******   СОРТИРОВКА ВСТАВКОЙ - самый быстрый метод !!! ***********************
+    public Integer[] sortArrayByInserting() {
         Integer[] sortedArray = new Integer[length];
         System.arraycopy(strList, 0, sortedArray, 0, length);
+        for (int i = 1; i < sortedArray.length; i++) {
+            int temp = sortedArray[i];
+            int j = i;
+            while (j > 0 && sortedArray[j - 1] >= temp) {
+                sortedArray[j] = sortedArray[j - 1];
+                j--;
+            }
+            sortedArray[j] = temp;
+        }
+        return sortedArray;
+    }
 
+    // ***** метод сортировки 2-й ******************* (в сгенерировнном массиве) ****
+    // ******   Пузырьковая сортировка ************************************************
+    public Integer[] bubbleSortingOfArray() {
+        Integer[] sortedArray = new Integer[length];
+        System.arraycopy(strList, 0, sortedArray, 0, length);
+        for (int i = 0; i < sortedArray.length - 1; i++) {
+            for (int j = 0; j < sortedArray.length - 1 - i; j++) {
+                if (sortedArray[j] > sortedArray[j + 1]) {
+                    swapElements(sortedArray, j, j + 1);
+                }
+            }
+        }
+        return sortedArray;
+    }
+
+    // -----------
+    private void swapElements(Integer[] arr, int indexA, int indexB) {
+        int tmp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = tmp;
+    }
+
+    // ***** метод сортировки 3-й ******************* (в сгенерировнном массиве) ****
+    // ******    сортировка выбором    ************************************************
+    public Integer[] sortArrayByChoicing() {
+        Integer[] sortedArray = new Integer[length];
+        System.arraycopy(strList, 0, sortedArray, 0, length);
+        for (int i = 0; i < sortedArray.length - 1; i++) {
+            int minElementIndex = i;
+            for (int j = i + 1; j < sortedArray.length; j++) {
+                if (sortedArray[j] < sortedArray[minElementIndex]) {
+                    minElementIndex = j;
+                }
+            }
+            swapElements(sortedArray, i, minElementIndex);
+        }
         return sortedArray;
     }
 }

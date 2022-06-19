@@ -38,7 +38,7 @@ public class IntegerListController {
 
     @GetMapping(path = "/removeid")
     public Integer removeElementById(@RequestParam("id") int index) {
-        return integerList.remove(index);
+        return integerList.removeId(index);
     }
 
     @GetMapping(path = "/remove")
