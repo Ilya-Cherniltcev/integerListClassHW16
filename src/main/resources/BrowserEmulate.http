@@ -1,36 +1,36 @@
-http://localhost:8080/add?string=1
+http://localhost:8080/add?number=1
 ###
-http://localhost:8080/add?string=2
+http://localhost:8080/add?number=2
 ###
-http://localhost:8080/add?string=3
+http://localhost:8080/add?number=3
 ###
-http://localhost:8080/add?string=4
+http://localhost:8080/add?number=4
 ###
-http://localhost:8080/add?string=5
+http://localhost:8080/add?number=5
 ###
-http://localhost:8080/set?id=4&string=AA
+http://localhost:8080/set?id=0&number=820
 ###
-http://localhost:8080/set?id=0&string=sss
+http://localhost:8080/set?id=0&number=555
 ###
-http://localhost:8080/set?id=-1&string=666
+http://localhost:8080/set?id=-1&number=999
 ###
 
-http://localhost:8080/addindex?id=0&string=0
+http://localhost:8080/addindex?id=2&number=0
 ###
 
 http://localhost:8080/removeid?id=0
 ###
-http://localhost:8080/remove?string=A
+http://localhost:8080/remove?number=82
 ###
 
-http://localhost:8080/contains?string=3
+http://localhost:8080/contains?number=3
 ###
 
-http://localhost:8080/indexof?string=5
+http://localhost:8080/indexof?number=0
 ###
-http://localhost:8080/lastindex?string=5
+http://localhost:8080/lastindex?number=0
 ###
-http://localhost:8080/get?id=2
+http://localhost:8080/get?id=1
 ###
 http://localhost:8080/equals?list=1,2,3
 ###
